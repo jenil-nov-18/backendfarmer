@@ -4,11 +4,11 @@ const Razorpay = require('razorpay');
 const cors = require('cors');
 const path = require('path');
 const { Clerk } = require('@clerk/clerk-sdk-node');
-const Product = require('../backend/db');
+const Product = require('./db');
 require('dotenv').config();
 
 const app = express();
-app.use(cors({origin: 'http://localhost:8080'}));
+app.use(cors({origin: ['http://localhost:8080','https://farmersellingproduct.vercel.app']}));
 app.use(express.json());
 
 // Initialize Clerk and Razorpay
@@ -297,12 +297,12 @@ app.delete('/api/products/:id', async (req, res) => {
 });
 
 // Serve frontend in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../agro-learn-commerce/dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../agro-learn-commerce/dist/index.html'));
-  });
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, '../agro-learn-commerce/dist')));
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../agro-learn-commerce/dist/index.html'));
+//   });
+// }
 
 // Register error handler
 app.use(errorHandler);
